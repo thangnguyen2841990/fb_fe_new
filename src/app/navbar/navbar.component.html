@@ -1,0 +1,150 @@
+<div class="topbar-stick">
+  <div class="logo">
+    <a routerLink="/home/index" title=""><img src="../../assets/images/logo.png" alt=""></a>
+  </div>
+
+  <div class="top-area">
+
+    <ul class="setting-area">
+      <li class="search-form">
+        <form [formGroup]="searchForm">
+          <input type="text" class="input-text" formControlName="content">
+          <button class="search" (click)="searchByName()"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+      </li>
+      <li style="margin-top: 20px">
+        <div ngbDropdown >
+          <a ngbDropdownToggle  title="Notification" data-ripple="">
+            <i style="font-size: 20px" class="fa-brands fa-facebook-messenger"></i><span style="color: red; font-size: 13px">{{totalMessage}}</span>
+          </a>        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <span  ngbDropdownItem>{{totalChat}} thông báo</span>
+          <ul ngbDropdownItem class="drops-menu" *ngFor="let chat of chats">
+            <li *ngIf="chat.user1.user.id !== currentUserId">
+              <a title="">
+                <img (click)="openModalMessager(templateMessager, chat.user1.user.id)" src="http://localhost:8080/image/{{chat.user1.avatar}}">
+                <div class="mesg-meta">
+                  <h6 (click)="openModalMessager(templateMessager, chat.user1.user.id)">{{chat.user1.fullName}}</h6>
+                  <span (click)="openModalMessager(templateMessager, chat.user1.user.id)">{{chat.lastContent}}</span>
+                  <i>{{chat.dateCreated}}</i>
+                </div>
+              </a>
+            </li>
+            <li *ngIf="chat.user2.user.id !== currentUserId">
+              <a title="">
+                <img  (click)="openModalMessager(templateMessager, chat.user2.user.id)" src="http://localhost:8080/image/{{chat.user2.avatar}}">
+                <div class="mesg-meta">
+                  <h6  (click)="openModalMessager(templateMessager, chat.user2.user.id)">{{chat.user2.fullName}}</h6>
+                  <span (click)="openModalMessager(templateMessager, chat.user2.user.id)">{{chat.lastContent}}</span>
+                  <i>{{chat.dateCreated}}</i>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+        </div>
+      </li>
+      <li style="margin-top: 20px">
+        <div ngbDropdown >
+          <a ngbDropdownToggle  title="Notification" data-ripple="">
+            <i style="font-size: 20px" class="ti-bell"></i><span style="color: red; font-size: 13px">{{totalNotification}}</span>
+          </a>        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <span  ngbDropdownItem>{{totalNotification}} thông báo</span>
+          <ul ngbDropdownItem class="drops-menu"  *ngFor="let notification of listNotification">
+            <li >
+              <a title="">
+                <img (click)="moveRouter(message.status)" src="http://localhost:8080/image-upload/{{notification.fromUser.avatar}}" style="width: 50px; height: auto">
+                <div class="mesg-meta">
+                  <h6 (click)="moveRouter(message.status)">{{notification.fromUser.fullName}}</h6>
+                  <span (click)="moveRouter(message.status)">{{notification.content}}</span>
+                  <i>{{notification.dateCreated}}</i>
+                </div>
+              </a>
+              <span class="tag green btn btn-danger" (click)="openModalDeleteMessage(templateDeleteMessage, message.id)">x</span>
+            </li>
+          </ul>
+        </div>
+        </div>
+      </li>
+      <li>
+        <div ngbDropdown >
+          <a type="button" class="btn dropdown" id="dropdownBasic1" data-toggle="dropdown" ngbDropdownToggle><img  src="http://localhost:8080/image-upload/{{user.avatar}}" style="width: 50px; border-radius: 50%; height: auto;"></a>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <a ngbDropdownItem routerLink="/get/user-info"><i class="fa-solid fa-user-pen"></i> Thông tin tài khoản</a>
+            <button ngbDropdownItem (click)="changePassword()"><i class="fa-solid fa-key"></i> Đổi mật khẩu</button>
+            <button ngbDropdownItem (click)="logOut()"><i class="fa-solid fa-arrow-right-from-bracket"></i>Đăng xuất</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div><!-- topbar -->
+<!--<ng-template #templateMessager>-->
+<!--  <div>-->
+<!--    <div class="modal-header">  <div class="nearly-pepls">-->
+<!--      <figure>-->
+<!--        <a href="time-line.html" title=""><img src="http://localhost:8080/image/{{toUserAvatar}}" style="width: 30px"></a>-->
+<!--      </figure>-->
+<!--      <div class="pepl-info">-->
+<!--        <h4><a href="time-line.html" title="">{{toUserFullName}}</a></h4>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">-->
+<!--        <span aria-hidden="true">×</span>-->
+<!--      </button>-->
+<!--    </div>-->
+
+<!--    <div class="modal-body">-->
+<!--      <cdk-virtual-scroll-viewport itemSize="10" class="scrolling-container">-->
+<!--        <ul class="we-comet" *ngFor="let messager of messagers" >-->
+<!--          <li *ngIf="messager.fromUser.user.id === currentUserId" >-->
+<!--            &lt;!&ndash;          <div class="comet-avatar">&ndash;&gt;-->
+<!--            &lt;!&ndash;            <img src="http://localhost:8080/image/{{messager.fromUser.avatar}}" style="width: 50px">&ndash;&gt;-->
+<!--            &lt;!&ndash;          </div>&ndash;&gt;-->
+<!--            <div class="we-comment" style="background-color: #0a98dc" >-->
+<!--              <p style="color:whitesmoke;">-->
+<!--                {{messager.content}}-->
+<!--              </p >-->
+<!--              <p style="color:whitesmoke;">{{messager.dateCreated}}</p>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--          <li *ngIf="messager.toUser.user.id === currentUserId">-->
+<!--            <div class="comet-avatar">-->
+<!--              <img src="http://localhost:8080/image/{{messager.fromUser.avatar}}" style="width: 50px">-->
+<!--            </div>-->
+
+<!--            <div class="we-comment" >-->
+<!--              <div class="coment-head" >-->
+<!--                <h5><a href="time-line.html" title="">{{messager.fromUser.fullName}}</a></h5>-->
+<!--              </div>-->
+<!--              <p>-->
+<!--                {{messager.content}}-->
+<!--              <p>{{messager.dateCreated}}</p>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </cdk-virtual-scroll-viewport>-->
+
+
+<!--    </div>-->
+
+<!--    <div class="modal-footer">-->
+<!--      <form [formGroup]="messagerForm" style="float: left"  >-->
+<!--        <textarea formControlName="content" placeholder="Nhập tin nhắn"></textarea>-->
+<!--      </form>-->
+<!--      <button style="float: right;" type="button" class="btn btn-primary" (click)="createMessager()">Gửi</button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</ng-template>-->
+<ng-template #templateDeleteMessage>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Bạn chắc chắn muốn xóa thông báo này chứ?</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteMessage(messageID)"><i class="fa-solid fa-trash-can"></i>Xóa</button>
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Đóng</button>
+  </div>
+</ng-template>
+

@@ -1,0 +1,66 @@
+.grid-img {
+  column-count: 3; /* Số cột */
+  column-gap: 10px; /* Khoảng cách giữa các cột */
+}
+
+.grid-img img {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  margin-bottom: 15px;
+  break-inside: avoid;
+}
+.grid-img1 {
+  column-count: 2; /* Số cột */
+  column-gap: 10px; /* Khoảng cách giữa các cột */
+}
+.grid-img1 img {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  margin-bottom: 15px;
+  break-inside: avoid;
+}
+.container-scroll {
+  overflow-y: scroll;
+  width: 700px;
+  height: 300px;
+  display: block;
+}
+.container-scroll-reply {
+  margin-left: 100px;
+  overflow-y: scroll;
+  width: 500px;
+  height: 80px;
+  display: block;
+}
+.grid-img-edit {
+  column-count: 4; /* Số cột */
+  column-gap: 5px; /* Khoảng cách giữa các cột */
+}
+
+.grid-img-edit img {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  margin-bottom: 10px;
+  break-inside: avoid;
+}
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  border-radius: 20px;
+}
+input[type=text]:focus {
+  border: 3px solid #555;
+  background-color: #f4f2f2;
+}
+.button-coment {
+  height: 20px;
+}
+a {
+  text-decoration: none;
+}

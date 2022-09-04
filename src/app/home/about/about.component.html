@@ -1,0 +1,582 @@
+<div class="theme-layout">
+  <div class="responsive-header">
+    <div class="mh-head first Sticky">
+			<span class="mh-btns-left">
+				<a class="" href="#menu"><i class="fa fa-align-justify"></i></a>
+			</span>
+      <span class="mh-text">
+				<a href="newsfeed.html" title=""><img src="images/logo.png" alt=""></a>
+			</span>
+      <span class="mh-btns-right">
+				<a class="fa fa-sliders" href="#shoppingbag"></a>
+			</span>
+    </div>
+  </div><!-- responsive header -->
+  <app-navbar></app-navbar>
+  <section>
+    <div class="feature-photo">
+      <figure><img src="http://localhost:8080/image-upload/{{user.backGround}}" alt="" style="width: 100%; height: 465px"></figure>
+      <div class="add-btn">
+      </div>
+      <div class="edit-phto">
+        <i class="fa fa-camera-retro"></i>
+        <label class="fileContainer" (click)="openModalChangeBackground(templateChangeBackground)">
+          Thay đổi ảnh nền
+        </label>
+      </div>
+      <div class="container-fluid">
+        <div class="row merged">
+          <div class="col-lg-2 col-sm-3">
+            <div class="user-avatar">
+              <figure>
+                <img src="http://localhost:8080/image-upload/{{user.avatar}}" alt="">
+                <div class="edit-phto">
+                  <i class="fa fa-camera-retro"></i>
+                  <label class="fileContainer" (click)="openModalChangeAvatar(templateChangeAvatar)">
+                    Thay đổi avatar
+                  </label>
+                </div>
+              </figure>
+            </div>
+          </div>
+          <div class="col-lg-10 col-sm-9">
+            <div class="timeline-info">
+              <ul>
+                <li class="admin-name">
+                  <h5>{{user.fullName}}</h5>
+                </li>
+                <li>
+                  <a class="" routerLink="/home" title="" data-ripple="">trang chủ</a>
+                  <a class="" href="timeline-photos.html" title="" data-ripple="">bạn bè</a>
+                  <a class="" href="timeline-videos.html" title="" data-ripple="">nhóm</a>
+                  <a class="" href="timeline-friends.html" title="" data-ripple="">bài viết</a>
+
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section><!-- top area -->
+
+  <section>
+    <div class="gap gray-bg">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="row" id="page-contents">
+              <div class="col-lg-3">
+
+                <aside class="sidebar static">
+
+                  <div class="widget">
+                    <h4 class="widget-title">Shortcuts</h4>
+                    <ul class="naves">
+                      <li>
+                        <i class="fa-solid fa-house"></i>
+                        <a routerLink="/home/index" title="">Trang chủ</a>
+                      </li>
+                      <li>
+                        <i class="fa-solid fa-user-group"></i>
+                        <a routerLink="/friend/list" title="">Bạn bè</a>
+                      </li>
+                      <li>
+                        <i class="fa-solid fa-people-group"></i>
+                        <a routerLink="/group/list" title="">Nhóm</a>
+                      </li>
+
+                    </ul>
+                  </div>
+                </aside>
+              </div>
+              <div class="col-lg-6">
+                <div class="loadMore">
+                  <div class="central-meta item">
+                    <div class="user-post" *ngFor="let post of posts">
+                      <div ngbDropdown style="float: right">
+                        <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
+                          ...
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                          <button  class="button-coment" ngbDropdownItem (click)="openModalEdit(templateEdit, post.postDTO.id)"><i class="fa-solid fa-pen-to-square"></i>Sửa bài viết
+                          </button>
+                          <button  class="button-coment" ngbDropdownItem (click)="openModalWithClass(templateDelete, post.postDTO.id)"><i class="fa-solid fa-trash-can"></i>Xóa bài
+                            viết
+                          </button>
+                        </div>
+                      </div>
+                      <div class="friend-info">
+
+                        <figure style="float: left">
+                          <img style="width: 50px; height: auto; border-radius: 50%"
+                               src="http://localhost:8080/image-upload/{{user.avatar}}">
+                        </figure>
+                        <div class="friend-name" style="float: left">
+                          <ins><a href="time-line.html" title="">{{user.fullName}}</a></ins>
+                          <span>{{post.postDTO.dateCreated}}</span><span> <p>{{post.postDTO.statusPost.name}}</p></span>
+                        </div>
+                        <div class="description">
+                          <h5>
+                            {{post.postDTO.content}}
+                          </h5>
+                        </div>
+                        <div class="post-meta">
+                          <div>
+                            <img [hidden]="post.images.length > 1 "
+                                 (click)="openModalShowImage(templateShowImage, img.id)"
+                                 *ngFor="let img of post.images" src="http://localhost:8080/image-upload/{{img.image}}"
+                                 alt="">
+                          </div>
+                          <div class="grid-img1">
+                            <img [hidden]="post.images.length != 2 "
+                                 (click)="openModalShowImage(templateShowImage, img.id)"
+                                 *ngFor="let img of post.images" src="http://localhost:8080/image-upload/{{img.image}}"
+                                 alt="">
+                          </div>
+                          <div class="grid-img">
+                            <img [hidden]="post.images.length < 3"
+                                 (click)="openModalShowImage(templateShowImage, img.id)"
+                                 *ngFor="let img of post.images" src="http://localhost:8080/image-upload/{{img.image}}"
+                                 alt="">
+                          </div>
+                          <div class="we-video-info">
+                            <ul>
+                              <li>
+															<span class="like" data-toggle="tooltip" title="like">
+														<i (click)="createLikePost(currentUserId, post.postDTO.id)" class="fa fa-thumbs-up"></i>
+																<ins>{{post.totalLikePost}}</ins>
+															</span>
+                              </li>
+                              <li>
+															<span class="comment" data-toggle="tooltip" title="Comments">
+																<i (click)="showComment()" class="fa fa-comments-o"></i>
+																<ins>{{post.totalComments}}</ins>
+															</span>
+                              </li>
+
+                            </ul>
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="coment-area">
+
+                        <ul class="we-comet">
+                          <cdk-virtual-scroll-viewport itemSize="10" class="container-scroll"
+                                                       [hidden]="post.comments.length === 0">
+                            <div  *ngFor="let comment of post.comments">
+                              <li>
+
+                                <div class="comet-avatar">
+                                  <img src="http://localhost:8080/image-upload/{{comment.formUser.avatar}}"
+                                       style="width: 30px">
+                                </div>
+
+                                <div class="we-comment">
+                                  <div class="coment-head">
+                                    <h5 style="margin-top: -20px; font-size: 13px"><p style="color: #0a98dc; cursor: pointer" (click)="navigateUrl(comment.formUser.id)" href="time-line.html" title="">{{comment.formUser.fullName}}</p></h5>
+                                    <div *ngIf="currentUserId === comment.formUser.id || currentUserId === post.postDTO.user.id" ngbDropdown style="float: right">
+                                      <button type="button" class="btn" id="dropdownBasic3" ngbDropdownToggle>
+                                        ...
+                                      </button>
+                                      <div ngbDropdownMenu aria-labelledby="dropdownBasic3">
+                                        <button *ngIf="currentUserId === comment.formUser.id" class="button-coment" ngbDropdownItem (click)="openModalEditComment(templateEditComment, comment.id)"><i class="fa-solid fa-pen-to-square"></i>Sửa
+                                        </button>
+                                        <button class="button-coment" ngbDropdownItem (click)="openModalDeleteComment(templateDeleteComment, comment.id)"><i class="fa-solid fa-trash-can"></i>Xóa
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <p style="margin-top: -20px">{{comment.content}}</p><span>
+                                                                  <p style="font-size: 10px">{{comment.dateCreated}}</p></span>
+
+
+                                </div>
+                                <div class="we-video-info">
+                                  <ul>
+                                    <li>
+															<span class="like" data-toggle="tooltip" title="like">
+																<i style="margin-left: 70px" (click)="likeComment(currentUserId, post.postDTO.id, comment.id)"
+                                   class="fa fa-thumbs-up"></i>
+																<ins style="margin-left: 70px" ><p
+                                  >{{comment.totalLike}}</p></ins>
+															</span>
+                                    </li>
+                                    <li>
+															<span class="comment" data-toggle="tooltip" title="Reply">
+																<i (click)="showComment()"
+                                   class="fa fa-comments-o"></i>
+                                																<ins>
+                                                                  <p>{{comment.totalReply}}</p></ins>
+															</span>
+                                    </li>
+                                    <br>
+                                    <li>
+                                      <cdk-virtual-scroll-viewport itemSize="10" class="container-scroll-reply"
+                                      [hidden]="comment.totalReply === 0">
+                                        <div *ngFor="let reply of comment.listReply">
+                                          <div>
+                                            <div class="comet-avatar">
+                                              <img
+                                                src="http://localhost:8080/image-upload/{{reply.fromUser.avatar}}"
+                                                style="width: 30px">
+                                            </div>
+
+                                            <div class="we-comment">
+                                              <div class="coment-head">
+                                                <h5 style="font-size: 13px">
+                                                  <p style="color: #0a98dc; cursor: pointer" (click)="navigateUrl(comment.formUser.id)" href="time-line.html"
+                                                     title="">{{reply.fromUser.fullName}}</p></h5>
+                                                <div *ngIf="currentUserId === reply.fromUser.id || currentUserId === post.postDTO.user.id" ngbDropdown style="float: right">
+                                                  <button type="button" class="btn" id="dropdownBasic2" ngbDropdownToggle>
+                                                    ...
+                                                  </button>
+                                                  <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                                                    <button *ngIf="currentUserId === reply.fromUser.id"  class="button-coment" ngbDropdownItem (click)="openModalEditReply(templateEditReply, reply.id)"><i style="font-size: 13px;margin-top:-20px" class="fa-solid fa-pen-to-square"></i>Sửa
+                                                    </button>
+                                                    <button class="button-coment" ngbDropdownItem (click)="openModalDeleteReply(templateDeleteReply, reply.id)"><i style="font-size: 13px" class="fa-solid fa-trash-can"></i>Xóa
+                                                    </button>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <p style="margin-top: -20px">
+                                                {{reply.content}}
+                                              </p>
+                                                                                          <span>
+                                                                              <p style="font-size: 10px">{{reply.dateCreated}}</p></span>
+                                            </div>
+
+                                          </div>
+                                        </div>
+                                      </cdk-virtual-scroll-viewport>
+                                    </li>
+                                    <br>
+                                    <li class="post-comment" style="margin-left: 120px">
+                                      <div class="comet-avatar">
+                                        <img src="http://localhost:8080/image-upload/{{user.avatar}}" style="width: 50px">
+                                      </div>
+                                      <div class="post-comt-box">
+                                        <form [formGroup]="replyForm"
+                                              (ngSubmit)="createReply(currentUserId, comment.id, post.postDTO.id)">
+                                          <input type="text"  size="60" style="height: 30px" formControlName="content"
+                                                 placeholder="Nhập phản hồi của bạn">
+                                          <button></button>
+                                        </form>
+                                      </div>
+                                    </li>
+
+                                  </ul>
+                                </div>
+                              </li>
+                            </div>
+                          </cdk-virtual-scroll-viewport>
+                          <br>
+                          <li class="post-comment">
+                            <div class="comet-avatar">
+                              <img src="http://localhost:8080/image-upload/{{user.avatar}}" style="width: 50px">
+                            </div>
+                            <div class="post-comt-box">
+                              <form [formGroup]="commentForm" (ngSubmit)="createComment(currentUserId, post.postDTO.id)">
+                                <input  type="text" size="70" style="color: #2f5b9d"  class="comment-text" formControlName="content" placeholder="Nhập bình luận của bạn">
+                                <!--                                <div class="add-smiles">-->
+                                <!--                                  <span class="em em-expressionless" title="add icon"></span>-->
+                                <!--                                </div>-->
+                                <button type="button"></button>
+                              </form>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <hr>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div><!-- centerl meta -->
+
+              <div class="col-lg-3">
+                <aside class="sidebar static">
+
+
+                </aside>
+              </div><!-- sidebar -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-4">
+          <div class="widget">
+            <div class="foot-logo">
+              <div class="logo">
+                <a href="index-2.html" title=""><img src="images/logo.png" alt=""></a>
+              </div>
+              <p>
+                The trio took this simple idea and built it into the world’s leading carpooling platform.
+              </p>
+            </div>
+            <ul class="location">
+              <li>
+                <i class="ti-map-alt"></i>
+                <p>33 new montgomery st.750 san francisco, CA USA 94105.</p>
+              </li>
+              <li>
+                <i class="ti-mobile"></i>
+                <p>+1-56-346 345</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <div class="widget">
+            <div class="widget-title"><h4>follow</h4></div>
+            <ul class="list-style">
+              <li><i class="fa fa-facebook-square"></i> <a href="https://web.facebook.com/shopcircut/"
+                                                           title="">facebook</a></li>
+              <li><i class="fa fa-twitter-square"></i><a href="https://twitter.com/login?lang=en" title="">twitter</a>
+              </li>
+              <li><i class="fa fa-instagram"></i><a href="https://www.instagram.com/?hl=en" title="">instagram</a></li>
+              <li><i class="fa fa-google-plus-square"></i> <a href="https://plus.google.com/discover"
+                                                              title="">Google+</a></li>
+              <li><i class="fa fa-pinterest-square"></i> <a href="https://www.pinterest.com/" title="">Pintrest</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <div class="widget">
+            <div class="widget-title"><h4>Navigate</h4></div>
+            <ul class="list-style">
+              <li><a href="about.html" title="">about us</a></li>
+              <li><a href="contact.html" title="">contact us</a></li>
+              <li><a href="terms.html" title="">terms & Conditions</a></li>
+              <li><a href="#" title="">RSS syndication</a></li>
+              <li><a href="sitemap.html" title="">Sitemap</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <div class="widget">
+            <div class="widget-title"><h4>useful links</h4></div>
+            <ul class="list-style">
+              <li><a href="#" title="">leasing</a></li>
+              <li><a href="#" title="">submit route</a></li>
+              <li><a href="#" title="">how does it work?</a></li>
+              <li><a href="#" title="">agent listings</a></li>
+              <li><a href="#" title="">view All</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <div class="widget">
+            <div class="widget-title"><h4>download apps</h4></div>
+            <ul class="colla-apps">
+              <li><a href="https://play.google.com/store?hl=en" title=""><i class="fa fa-android"></i>android</a></li>
+              <li><a href="https://www.apple.com/lae/ios/app-store/" title=""><i class="ti-apple"></i>iPhone</a></li>
+              <li><a href="https://www.microsoft.com/store/apps" title=""><i class="fa fa-windows"></i>Windows</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer><!-- footer -->
+  <div class="bottombar">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <span class="copyright"><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></span>
+          <i><img src="images/credit-cards.png" alt=""></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #templateDelete>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Bạn chắc chắn muốn xóa bài viết chứ?</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deletePost()"><i class="fa-solid fa-trash-can"></i>Xóa</button>
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Đóng</button>
+  </div>
+</ng-template>
+
+<ng-template #templateEdit>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Chỉnh sửa bài viết</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <form [formGroup]="postForm">
+    <div class="modal-body">
+
+      <div class="grid-img-edit" >
+        <div *ngFor="let image of images">
+          <button (click)="openModalDeleteImage(templateDeleteImage, image.id )" style="color: #fff;
+position: absolute;
+top: 18px">X</button>
+          <img  src="http://localhost:8080/image-upload/{{image.image}}">
+<!--                    <button (click)="openModalDeleteImage(templateDeleteImage, image.id)">X</button>-->
+        </div>
+      </div>
+      <div class="mb-3">
+        <h5>Thêm ảnh</h5>
+        <input type="file" multiple (change)="changeFile($event)">
+      </div>
+
+      <div class="mb-3">
+        <h5>Ai có thể xem bài viết</h5>
+        <select formControlName="statusId">
+          <i class="fa-solid fa-earth-africa"> </i><option value="1"> Tất cả </option>
+          <option value="2"><i class="fa-solid fa-earth-africa"> </i> Bạn bè </option>
+          <option value="3"><i class="fa-solid fa-earth-africa"> </i> Chỉ mình tôi </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <h5>Nội dung bài viết</h5>
+        <textarea formControlName="content"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-warning" (click)="updatePost()"><i class="fa-solid fa-pen-to-square"></i>Sửa</button>
+      <button type="button" class="btn btn-default" (click)="modalRef.hide()">Đóng</button>
+    </div>
+  </form>
+</ng-template>
+
+
+<ng-template #templateDeleteImage>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Bạn chắc chắn muốn xóa ảnh này chứ?</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteImage()"><i class="fa-solid fa-trash-can"></i>Xóa</button>
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Đóng</button>
+  </div>
+</ng-template>
+
+<ng-template #templateShowImage>
+  <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <img src="http://localhost:8080/image-upload/{{image.image}}">
+  </div>
+</ng-template>
+
+<ng-template #templateChangeAvatar>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Thay đổi avatar</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="avatarForm">
+      <div class="mb-3" style="float: right">
+        <select formControlName="statusId">
+          <i class="fa-solid fa-earth-africa"> </i><option value="1"> Tất cả </option>
+          <option value="2"><i class="fa-solid fa-earth-africa"> </i> Bạn bè </option>
+          <option value="3"><i class="fa-solid fa-earth-africa"> </i> Chỉ mình tôi </option>
+        </select>
+      </div>
+      <h5>Lựa chọn ảnh</h5>
+      <input type="file" formControlName="avatar" (change)="changeAvatar($event)">
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="editAvatar()">Xác nhận</button>
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Đóng</button>
+  </div>
+</ng-template>
+
+<ng-template #templateChangeBackground>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Thay đổi ảnh nền</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="backGroundForm">
+      <div class="mb-3" style="float: right">
+        <select formControlName="statusId">
+          <i class="fa-solid fa-earth-africa"> </i><option value="1"> Tất cả </option>
+          <option value="2"><i class="fa-solid fa-earth-africa"> </i> Bạn bè </option>
+          <option value="3"><i class="fa-solid fa-earth-africa"> </i> Chỉ mình tôi </option>
+        </select>
+
+      </div>
+      <h5>Lựa chọn ảnh</h5>
+      <input type="file" formControlName = "image"  (change)="changeBackground($event)">
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="editBackground()">Xác nhận</button>
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Đóng</button>
+  </div>
+</ng-template>
+
+<ng-template #templateDeleteComment>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Bạn chắc chắn muốn xóa bình luận này chứ?</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteComment()"><i class="fa-solid fa-trash-can"></i>Xóa</button>
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Đóng</button>
+  </div>
+</ng-template>
+<ng-template #templateEditComment>
+  <div class="modal-body">
+    <form [formGroup]="commentEdit" (ngSubmit)="editComemnt()" >
+      <input type="text" formControlName="content">
+      <button></button>
+    </form>
+  </div>
+</ng-template>
+<ng-template #templateDeleteReply>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Bạn chắc chắn muốn xóa bình luận này chứ?</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteReply()"><i class="fa-solid fa-trash-can"></i>Xóa</button>
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Đóng</button>
+  </div>
+</ng-template>
+<ng-template #templateEditReply>
+  <div class="modal-body">
+    <form [formGroup]="replyEdit" (ngSubmit)="editReply()" >
+      <input type="text" formControlName="content">
+      <button></button>
+    </form>
+  </div>
+</ng-template>
+
+
+
+
+

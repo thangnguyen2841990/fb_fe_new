@@ -1,0 +1,59 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+
+a {
+  text-decoration: none;
+  color: #0a0e14;
+}
+.menu-container1 {
+  float: right;
+  width: 200px;
+  background: white;
+  font-size: 20px;
+}
+.menu-toggler1 {
+  padding: 10px;
+}
+.menu1 {
+  background: white;
+  color: black;
+  padding: 10px;
+}
+.menu-item1 {
+  cursor: pointer;
+  padding: 5px 0;
+}
+.menu-item1:hover {
+  text-decoration: underline;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.dropdown-toggle::after {
+  display:none;
+}
+
+.topbar-stick {
+  height: 90px;
+}
+.logo {
+  top: 10px;
+  left: 80px;
+}
+.post-comt-box.comment-text{
+  border-radius: 20px;
+}
+.we-comment{
+  border-radius: 20px;
+  background-color: #f4f2f2;
+}
+.user-post {
+  border-radius: 20px;
+}
+.button-coment {
+  height: 20px;
+  padding: 1px 8px;
+}
+
+
+

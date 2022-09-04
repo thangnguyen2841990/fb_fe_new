@@ -1,0 +1,126 @@
+
+<div class="hold-transition register-page">
+  <div class="register-box">
+    <div class="register-logo">
+      <h2>Đăng ký tài khoản</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-body register-card-body">
+        <p class="login-box-msg">Nhanh chóng và dễ dàng</p>
+
+        <form [formGroup]="signUpForm" (ngSubmit)="register()">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" (change)="usernameCheck($event)" formControlName="username" placeholder="Tên tài khoản">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.username?.touched || submitted) && signUpForm.controls.username?.errors?.required">Hãy nhập username!</span>
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.username?.touched || submitted) && isExitUsername">UserName đã tồn tại!</span>
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.username?.touched || submitted) && signUpForm.controls.username?.errors?.pattern">Không nhập các ký tự đặc biệt (*, %, , ')!</span>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" formControlName="password" class="form-control" placeholder="Mật khẩu">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.password?.touched || submitted) && signUpForm.controls.password?.errors?.required">Hãy nhập passwword</span>
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.password?.touched || submitted) && signUpForm.controls.password?.errors?.minlength">Hãy nhập tối thiểu 6 ký tự</span>
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.password?.touched || submitted) && signUpForm.controls.password?.errors?.maxlength">Hãy nhập tối đa 32 ký tự</span>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" formControlName="confirmPassword" class="form-control" placeholder="Nhập lại mật khẩu">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.confirmPassword?.touched || submitted) && signUpForm.controls.confirmPassword?.errors?.required">Hãy nhập lại mật khẩu!</span>
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.confirmPassword?.touched || submitted) && (signUpForm.controls.confirmPassword.value != signUpForm.controls.password.value )">Mật khẩu không trùng khớp!</span>
+            </div>
+          </div>
+
+          <!--      <div class="input-group mb-3">-->
+          <!--        <input type="text" formControlName="fullName" class="form-control" placeholder="Tên đầy đủ">-->
+          <!--        <div class="input-group-append">-->
+          <!--          <div class="input-group-text">-->
+          <!--            <span class="fas fa-user"></span>-->
+          <!--          </div>-->
+          <!--        </div>-->
+          <!--      </div>-->
+          <div class="input-group mb-3">
+
+
+            <input type="email" formControlName="email" (change)="checkEmail($event)" class="form-control" placeholder="Email">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.email?.touched || submitted) && signUpForm.controls.email?.errors?.required">Hãy nhập email!</span>
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.email?.touched || submitted) && signUpForm.controls.email?.errors?.email">Hãy nhập email đúng định dạng email!</span>
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.email?.touched || submitted) && isExitEmail">email đã tồn tại!</span>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="tel" formControlName="phoneNumber" (change)="phoneCheck($event)" class="form-control" placeholder="Số điện thoại">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-phone"></span>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.phoneNumber?.touched || submitted) && signUpForm.controls.phoneNumber?.errors?.required">Hãy nhập số điện thoại!</span>
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.phoneNumber?.touched || submitted) && signUpForm.controls.phoneNumber?.errors?.pattern">SĐT có 10 hoặc 11 số, bắt đầu bằng số 0!</span>
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.phoneNumber?.touched || submitted) && isExitPhone">SĐT đã tồn tại!</span>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="date" formControlName="birthDay" (change)="checkBirthday($event)" class="form-control" placeholder="Sinh nhật">
+            <div class="input-group-append">
+              <!--          <div class="input-group-text">-->
+              <!--            <span class="fas fa-birthday-cake"></span>-->
+              <!--          </div>-->
+            </div>
+            <div class="input-group mb-3">
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.dateOfBirth?.touched || submitted) && signUpForm.controls.dateOfBirth?.errors?.required">Hãy ngày sinh</span>
+              <span class="col alert alert-danger" role="alert" *ngIf="(signUpForm.controls.dateOfBirth?.touched || submitted) && invalidBirthday">Hãy nhập ngày sinh trước ngày hôm nay</span>
+              <!--          <span class="col alert alert-danger" role="alert" *ngIf="(signUpFormControl.dateOfBirth.touched || submitted) && signUpFormControl.dateOfBirth.errors?.pattern">SĐT có 10 hoặc 11 số, bắt đầu bằng số 0!</span>-->
+            </div>
+          </div>
+          <!--      <div class="input-group mb-3">-->
+          <!--        <input type="text" formControlName="address" class="form-control" placeholder="Địa chỉ">-->
+          <!--        <div class="input-group-append">-->
+          <!--          <div class="input-group-text">-->
+          <!--            <span class="fas fa-address-book"></span>-->
+          <!--          </div>-->
+          <!--        </div>-->
+          <!--      </div>-->
+
+          <div class="row">
+            <!-- /.col -->
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary btn-block">Đăng ký</button>
+              <br>
+              <br>
+              <a routerLink="/login"> Bạn đã có tài khoản? Đăng nhập ngay!</a>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+
+      </div>
+      <!-- /.form-box -->
+    </div><!-- /.card -->
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<button style="background-color: #0a98dc" (click)="openForm()" class="open-button">
+  <i class="fab fa-facebook-messenger fa-2x"></i>
+</button>
+<div [style.display]="isOpened == true ? 'block' : 'none'" class="chat-popup" id="myForm">
+  <form (ngSubmit)="sentMessage(currentUser)"
+        class="form-container">
+    <div class="row chat-header">
+      <div class="col-10">
+        <img src="http://localhost:8080/image/{{avatar}}" style="width: 50px; border-radius: 50%; float: left; text-align: center" >
+        <p style="float: left; text-align: center; margin-top: 10px">{{fullname}}</p>
+
+        <div ngbDropdown style="float: right">
+          <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
+            ...
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem><i class="fa-solid fa-trash-can"></i>Xóa hết cuộc trò chuyện
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-2">
+        <button (click)="closeForm()" class="btn btn-tool" type="button">
+          <i class="fas fa-times" style="color: #7fad39"></i>
+        </button>
+      </div>
+    </div>
+    <div #message (scroll)="loadNewData(currentUser)" *ngIf="currentUser"
+         class="chat-history row" id="chat-message">
+      <ul id="history">
+        <ng-container *ngFor="let message of listMessage">
+          <li [className]="currentUser.id == message.sender.id ? 'me' : 'you'">
+            {{message.content}}<br>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+    <div *ngIf="!currentUser" class="d-flex justify-content-center align-items-center"
+         style="height: 200px">
+      <p>
+        Bạn cần phải đăng nhập để sử dụng tính năng này!
+      </p>
+    </div>
+    <div class="chat-footer row">
+      <input [(ngModel)]="content" class="form-control col-10" id="msg" name="content" placeholder="Hãy viết gì đó"
+             required style="background: #f1f1f1;"/>
+      <button class="btn col-2" type="submit">
+      </button>
+    </div>
+  </form>
+</div>
+
+<ng-template #templateDelete>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Bạn chắc chắn muốn xóa bình luận này chứ?</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteChat()"><i class="fa-solid fa-trash-can"></i>Xóa</button>
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Đóng</button>
+  </div>
+</ng-template>
+

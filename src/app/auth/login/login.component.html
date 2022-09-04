@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<main>
+  <div class="row">
+
+    <div class="colm-form">
+      <div class="form-container">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" (change)="usernameCheck($event)" formControlName="username"
+                   placeholder="Tên tài khoản"
+                   [ngModel]="userRegister?.username">
+          </div>
+
+          <div class="input-group mb-3">
+            <span class="col alert alert-danger" role="alert"
+                  *ngIf="(loginForm.controls.username?.touched || submitted) && loginForm.controls.username?.errors?.required">Hãy nhập Username để đăng nhập!
+            </span>
+            <span class="col alert alert-danger" role="alert"
+                  *ngIf="(loginForm.controls.username?.touched || submitted) && loginForm.controls.username?.errors?.pattern">Không nhập các ký tự đặc biệt (*, %, , ')!
+            </span>
+            <span class="col alert alert-danger" role="alert"
+                  *ngIf="(loginForm.controls.username?.touched || submitted) && !isExitUsername">Username này chưa được đăng ký!
+            </span>
+            <span class="col alert alert-danger" role="alert"
+                  *ngIf="(loginForm.controls.username?.touched || submitted )&& isBlockUser">Tài khoản đã bị khóa!</span>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group">
+              <input type="password" class="form-control" (change)="passwordCorrectCheck($event)" formControlName="password"
+                     placeholder="Mật khẩu">
+            </div>
+          </div>
+
+          <div class="input-group mb-3">
+            <span class="col alert alert-danger" role="alert"
+                  *ngIf="(loginForm.controls.password?.touched || submitted )&& loginForm.controls.password?.errors?.required">Hãy nhập Password để đăng nhập!</span>
+            <span class="col alert alert-danger" role="alert"
+                  *ngIf="(loginForm.controls.password?.touched || submitted )&& !isTruePassword">Mật khẩu không đúng vui lòng nhập lại!</span>
+          </div>
+          <input type="submit" class="btn-login" value="Đăng nhập">
+        </form>
+        <button routerLink="/auth/register" class="btn-new">Đăng ký tài khoản</button>
+      </div>
+      <!--      <p><a href="#"><b>Create a Page</b></a> for a celebrity, brand or business.</p>-->
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

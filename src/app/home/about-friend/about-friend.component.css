@@ -1,0 +1,181 @@
+a {
+  text-decoration: none;
+}
+.grid-img {
+  column-count: 3; /* Số cột */
+  column-gap: 10px; /* Khoảng cách giữa các cột */
+}
+
+.grid-img img {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  margin-bottom: 15px;
+  break-inside: avoid;
+}
+.grid-img1 {
+  column-count: 2; /* Số cột */
+  column-gap: 10px; /* Khoảng cách giữa các cột */
+}
+.grid-img1 img {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  margin-bottom: 15px;
+  break-inside: avoid;
+}
+.container-scroll {
+  overflow-y: scroll;
+  width: 700px;
+  height: 300px;
+  display: block;
+}
+.container-scroll-reply {
+  margin-left: 100px;
+  overflow-y: scroll;
+  width: 500px;
+  height: 80px;
+  display: block;
+}
+.grid-img-edit {
+  column-count: 4; /* Số cột */
+  column-gap: 5px; /* Khoảng cách giữa các cột */
+}
+
+.grid-img-edit img {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  margin-bottom: 10px;
+  break-inside: avoid;
+}
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  border-radius: 20px;
+}
+input[type=text]:focus {
+  border: 3px solid #555;
+  background-color: #f4f2f2;
+}
+.button-coment {
+  height: 20px;
+}
+.open-button {
+  background-color: #7fad39;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  border-radius: 50%;
+}
+
+/* The popup chat - hidden by default */
+.chat-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  box-shadow: 2px 2px 2px 2px #7fad39;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 400px;
+  min-width: 300px;
+  padding: 10px;
+  border: #FFFFFF;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: white;
+}
+
+/* When the textarea gets focus, do something */
+.form-container input:focus {
+  background-color: blue;
+  outline: none;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chat-history ul li {
+  display: inline-block;
+  clear: both;
+  padding: 5px;
+  border-radius: 30px;
+  margin-bottom: 5px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.you {
+  background: #eee;
+  float: left;
+}
+
+.me {
+  float: right;
+  background: dodgerblue;
+  color: #fff;
+}
+
+.you + .me {
+  border-bottom-right-radius: 5px;
+}
+
+.me + .me {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.me:last-of-type {
+  border-bottom-right-radius: 30px;
+}
+
+.chat-header {
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.chat-footer {
+  border-top: 2px solid #f0f0f0;
+}
+
+.chat-history {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+#history {
+  width: 100%;
+}
+
+#chat-message {
+  max-height: 300px;
+  min-height: 250px;
+  overflow-y: scroll;
+}
+
+
